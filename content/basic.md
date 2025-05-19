@@ -1,4 +1,10 @@
-# Title
+---
+title: Basic Blog
+description: A basic blog
+date: 2025-05-18
+---
+
+# Basic Blog
 
 ## List
 

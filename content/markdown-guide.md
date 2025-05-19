@@ -1,3 +1,9 @@
+---
+title: Markdown Syntax Guide
+description: A basic markdown guide
+date: 2025-05-19
+---
+
 # Markdown syntax guide
 
 ## Headers
