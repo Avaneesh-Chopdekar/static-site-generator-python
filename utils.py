@@ -2,6 +2,7 @@ import os
 import re
 import frontmatter
 from markdown import markdown
+from datetime import datetime
 
 
 def render_markdown_to_html(
@@ -23,7 +24,7 @@ def render_markdown_to_html(
 
         title = metadata.get("title", "Default Title")
         description = metadata.get("description", "Default Description")
-        date = metadata.get("date", "Unknown Date")
+        date = metadata.get("date", datetime.now())
 
         html_content = markdown(content, extensions=["fenced_code", "tables"])
 
@@ -49,18 +50,87 @@ def render_markdown_to_html(
         print(f"Error processing {markdown_file_path}: {e}")
 
 
-def get_markdown_files(
+def generate_article_html(title: str, description: str, filename: str) -> str:
+    """
+    Generates the HTML for a single article.
+
+    Args:
+        title (str): The title of the article.
+        description (str): The description of the article.
+        filename (str): The filename of the article.
+
+    Returns:
+        str: The HTML for the article.
+    """
+    return f"""
+            <article>
+                <h3><a href="{filename}.html">{title}</a></h3>
+                <p>
+                    {description}
+                </p>
+                <a href="{filename}.html">Read more &rarr;</a>
+            </article>
+"""
+
+
+def process_all_markdown_files(
     content_dir: str, template_path="template.html", output_dir="dist"
 ):
     """
-    Gets all markdown files from the specified directory and converts them to HTML.
+    Processes all markdown files in a directory using the specified template and generates
+    the index.html.
 
     Args:
         content_dir (str): The directory to search for markdown files.
         template_path (str): The path to the HTML template file.
         output_dir (str): The directory to save the HTML files.
     """
+    all_posts = []
     for filename in os.listdir(content_dir):
         if filename.endswith(".md"):
             file_path = os.path.join(content_dir, filename)
-            render_markdown_to_html(file_path, template_path, output_dir)
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    post = frontmatter.load(f)
+                all_posts.append(
+                    {
+                        "title": post.metadata.get("title", "Default Title"),
+                        "description": post.metadata.get(
+                            "description", "Default Description"
+                        ),
+                        "date": post.metadata.get("date", datetime.now()),
+                        "featured": post.metadata.get("featured", False),
+                        "filename": os.path.splitext(filename)[0],
+                        "file_path": file_path,
+                    }
+                )
+            except Exception as e:
+                print(f"Error reading {filename}: {e}")
+
+    all_posts.sort(key=lambda x: x["date"], reverse=True)
+
+    featured_posts = [post for post in all_posts if post["featured"]]
+    recent_posts = all_posts
+
+    featured_posts_html = "".join(
+        generate_article_html(post["title"], post["description"], post["filename"])
+        for post in featured_posts
+    )
+
+    recent_posts_html = "".join(
+        generate_article_html(post["title"], post["description"], post["filename"])
+        for post in recent_posts
+    )
+
+    with open("dist/index.html", "r", encoding="utf-8") as f:
+        landing_page_template = f.read()
+
+    landing_page_html = landing_page_template.replace(
+        "<!-- Dynamically add featured blog posts -->", featured_posts_html
+    ).replace("<!-- Dynamically add recent blog posts -->", recent_posts_html)
+
+    with open(os.path.join(output_dir, "index.html"), "w", encoding="utf-8") as f:
+        f.write(landing_page_html)
+
+    for post in all_posts:
+        render_markdown_to_html(post["file_path"], template_path, output_dir)
