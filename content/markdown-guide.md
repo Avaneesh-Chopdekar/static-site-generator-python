@@ -74,4 +74,4 @@ alert(message);
 
 ## Inline code
 
-This web site is using `markedjs/marked`.
+Print statement in python is written in `print("Hello world")`.
