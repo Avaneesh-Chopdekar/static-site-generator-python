@@ -87,7 +87,7 @@ Below here is the actual content of the blog post...
 - **Templates:** Customize the `template/blog.html` and `index.html` files to change the look and feel of your blog.
 - **CSS:** Add CSS styles to the generated HTML files by linking to a stylesheet in your templates. A basic `style.css` example is provided in previous responses.
 - **Content:** Add or modify Markdown files in the `content/` directory to update the content of your blog.
-- **Configuration:** Adjust the `content_directory`, `template_file`, and `output_directory` variables in `render.py` to match your project structure.
+- **Configuration:** Adjust the `content_directory`, `template_file`, and `output_directory` variables in `main.py` to match your project structure.
 
 ## License
 
