@@ -122,7 +122,7 @@ def process_all_markdown_files(
         for post in recent_posts
     )
 
-    with open("dist/index.html", "r", encoding="utf-8") as f:
+    with open("template/index.html", "r", encoding="utf-8") as f:
         landing_page_template = f.read()
 
     landing_page_html = landing_page_template.replace(

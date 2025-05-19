@@ -39,7 +39,7 @@ This Python script generates a static blog from Markdown files with frontmatter,
 
     - **`content/` directory:** This directory should contain your Markdown files.
     - **`template/blog.html` file:** This file should contain the HTML template for individual blog posts, with placeholders for `{{ title }}`, `{{ description }}`, and `{{ content }}`. You can customize the template to your liking.
-    - **`index.html` file:** This file should contain the HTML template for the landing page (`index.html`). It must contain the following placeholders:
+    - **`template/index.html` file:** This file should contain the HTML template for the landing page (`index.html`). It must contain the following placeholders:
       - `<!-- Dynamically add featured blog posts -->`: This is where the featured posts will be inserted.
       - `<!-- Dynamically add recent blog posts -->`: This is where the recent posts will be inserted.
         Remove any existing `article` tags, ensuring only the placeholder comments remain where you want the content inserted.
@@ -84,7 +84,7 @@ Below here is the actual content of the blog post...
 
 ## Customization
 
-- **Templates:** Customize the `template/blog.html` and `index.html` files to change the look and feel of your blog.
+- **Templates:** Customize the `template/blog.html` and `template/index.html` files to change the look and feel of your blog.
 - **CSS:** Add CSS styles to the generated HTML files by linking to a stylesheet in your templates. A basic `style.css` example is provided in previous responses.
 - **Content:** Add or modify Markdown files in the `content/` directory to update the content of your blog.
 - **Configuration:** Adjust the `content_directory`, `template_file`, and `output_directory` variables in `main.py` to match your project structure.
