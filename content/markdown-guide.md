@@ -47,7 +47,7 @@ _You **can** combine them_
 
 ![This is an alt text.](https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png "Network image.")
 
-![This is an alt text.](/assets/sample.webp "Network image.")
+![This is an alt text.](/assets/sample.webp "Local image.")
 
 ## Links
 
